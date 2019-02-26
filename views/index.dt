@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    h1 Burning Rubber Paste
+    h2 Usage
+    table(border='1')
+        thead: tr
+            th Method - Endpoint
+            th Effect
+        tbody
+            tr
+                td: pre: code POST /data=anything
+                td Pastebin anything
+            tr
+                td: pre: code GET /id
+                td Read paste with ID "id"
+            tr
+                td: pre: code GET /id?lang
+                td Read paste with ID "id", and highlight it as "lang"
+            tr
+                td: pre: code GET /raw/id
+                td Get the raw contents of paste with ID "id"
+    h2 Examples
+    pre: code(class='language-sh')
+        | curl -X POST -F 'sprunge=<-' https://brpaste.example.com
+        | http -f POST https://brpaste.example.com data=@file.txt
+        | curl https://brpaste.example.com/raw/some_id
+        | xdg-open https://brpaste.example.com/some_id?cpp
+    h2 Paste from a browser
+    form(action='/', method='post')
+        textarea(name='data', autocomplete='off',
+            required, autofocus,
+            cols='80', rows='27')
+        br
+        button(type='submit') Paste it!
+
+//- vim: ft=pug
