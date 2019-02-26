@@ -8,16 +8,12 @@ block scripts
 block bodyscripts
     script(
         src='#{prefix}/prism.min.js')
-    - import std.array;
-    - if(!language.empty)
+    - if(language != "none")
         script(
             src='#{prefix}/components/prism-#{language}.min.js')
 
 block content
     pre
-        - import std.array;
-        - string lang = "none";
-        - if (!language.empty) lang = language;
-        code(class='language-#{lang}')= data
+        code(class='language-#{language}')= data
 
 //- vim: ft=pug

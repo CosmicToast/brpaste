@@ -39,7 +39,7 @@ class BRPaste {
     @path("/:id")
     void getId(string _id) {
         if (!client.exists(_id)) throw new HTTPStatusException(404);
-        string language;
+        string language = "none";
         // TODO: rewrite the next two lines once #2273 is resolved
         auto req = request;
         if (req.query.length > 0) language = req.query.byKey.front;
