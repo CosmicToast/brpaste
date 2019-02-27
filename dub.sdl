@@ -4,3 +4,5 @@ authors "Chloe Kudryavtsev"
 copyright "Copyright © 2019, Chloe Kudryavtsev"
 license "MIT"
 dependency "vibe-d" version="~>0.8.5-beta.2"
+
+versions "VibeDefaultMain"
