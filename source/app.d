@@ -1,8 +1,9 @@
-import brpaste;
+import brpaste.web;
 
 import vibe.d;
 
 shared static this() {
+    // HTTP settings
     auto settings = new HTTPServerSettings;
     settings.port = 8080;
     settings.bindAddresses = [];
@@ -11,7 +12,15 @@ shared static this() {
     readOption("port|p", &settings.port, "Sets the port to listen on [8080]");
     if(settings.bindAddresses.empty) settings.bindAddresses = [ "127.0.0.1", "::1" ];
 
+    // setup router
     auto router = new URLRouter;
-    router.registerWebInterface(new BRPaste);
+    router.match(HTTPMethod.REPORT, "/health", &health);
+    router.get("/health", &health);
+
+    router.get("/", staticTemplate!"index.dt");
+    router.post("/", &post);
+    router.get("/:id", &id);
+    router.get("/raw/:id", &rawId);
+
     listenHTTP(settings, router);
 }
