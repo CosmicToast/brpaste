@@ -26,6 +26,7 @@ block content
         | http -f https://brpaste.example.com data=@file.txt
         | curl https://brpaste.example.com/raw/some_id
         | xdg-open https://brpaste.example.com/some_id?cpp
+        | http https://brpaste.example.com/some_id lang==cpp
     h2 Paste from a browser
     form(action='/', method='post')
         textarea(name='data', autocomplete='off',
