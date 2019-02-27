@@ -10,7 +10,8 @@ void id(HTTPServerRequest req, HTTPServerResponse res) {
     string id = req.params["id"];
     string language = "none";
     // TODO: rewrite the next two lines once #2273 is resolved
-    if (req.query.length > 0) language = req.query.byKey.front;
+    if ("lang" in req.query) language = req.query["lang"];
+    else if (req.query.length > 0) language = req.query.byKey.front;
     enforceHTTP(client.exists(id), HTTPStatus.notFound, "No paste under " ~ id ~ ".");
 
     auto data = client.get(id);
