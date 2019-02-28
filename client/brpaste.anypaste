@@ -3,7 +3,7 @@
 : "${brpaste_host:=https://p.toastin.space}"
 
 c() {
-    curl -X POST -F "$1=<-" "$brpaste_host" < "$2" || return 1
+    curl -F "$1=<-" "$brpaste_host" < "$2" || return 1
 }
 
 case $1 in
