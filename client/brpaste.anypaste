@@ -1,0 +1,31 @@
+#!/bin/sh
+
+: "${brpaste_host:=https://p.toastin.space}"
+
+c() {
+    curl -X POST -F "$1=<-" "$brpaste_host" < "$2" || return 1
+}
+
+case $1 in
+    check_eligibility)
+        [[ $ap_mime == text/* ]]
+        ;;
+    upload)
+        brpaste_id="$(c data $ap_path)" || return 1
+        echo >&2
+        echo "Link: $brpaste_host/$brpaste_id"
+        echo "Direct: $brpaste_host/raw/$brpaste_id"
+        echo
+        ;;
+    get_info)
+        echo '[name]'
+        echo 'BRPaste'
+        echo '[description]'
+        echo 'A pastebin so fast, it burns rubber.'
+        echo '[tags]'
+        echo 'private'
+        echo 'direct'
+        echo
+        echo '[optional_config]'
+        echo 'brpaste_host:Hosted instance to use (default: https://p.toastin.space)'
+esac
