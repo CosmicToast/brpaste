@@ -1,29 +1,31 @@
 module brpaste.web;
 
 import brpaste.hash;
+import brpaste.storage;
 
 import vibe.vibe;
 
-RedisDatabase client;
+RedisStorage store;
+
+string idCommon(in HTTPServerRequest req) {
+    string id = req.params["id"];
+    return store.get(id);
+}
 
 void id(HTTPServerRequest req, HTTPServerResponse res) {
-    string id = req.params["id"];
     string language = "none";
     // TODO: rewrite the next two lines once #2273 is resolved
     if ("lang" in req.query) language = req.query["lang"];
     else if (req.query.length > 0) language = req.query.byKey.front;
-    enforceHTTP(client.exists(id), HTTPStatus.notFound, "No paste under " ~ id ~ ".");
 
-    auto data = client.get(id);
+    auto data = idCommon(req);
     render!("code.dt", data, language)(res);
 }
 
 void rawId(HTTPServerRequest req, HTTPServerResponse res) {
-    string id = req.params["id"];
-    enforceHTTP(client.exists(id), HTTPStatus.notFound, "No paste under " ~ id  ~ ".");
-
-    auto data = client.get(id);
     res.contentType = "text/plain";
+
+    auto data = idCommon(req);
     res.writeBody(data);
 }
 
@@ -32,31 +34,23 @@ void post(HTTPServerRequest req, HTTPServerResponse res) {
     auto data = req.form["data"];
 
     auto hash = data.hash;
-    client.set(hash, data);
+    store.put(hash, data);
     res.statusCode = HTTPStatus.created;
     res.writeBody(hash);
 }
 
 void health(HTTPServerRequest req, HTTPServerResponse res) {
     res.statusCode = HTTPStatus.noContent;
-    scope(exit) res.writeBody("");
+    scope(success) res.writeBody("");
 
     // Redis
-    try {
-        client.client.ping;
-    } catch (Exception e) {
-        logCritical("Redis is down!");
-        res.statusCode = HTTPStatus.serviceUnavailable;
-        res.statusPhrase = "Backend Storage Unavailable";
-        res.headers["Retry-After"] = "60";
-    }
+    store.isDown;
 }
 
 shared static this() {
     // setup redis
-    string path = "redis://127.0.0.1";
+    string path;
     readOption("redis|r", &path, "The URL to use to connect to redis");
-    URL redis = path;
-    client = connectRedisDB(redis);
+    store = path.empty ? new RedisStorage : new RedisStorage(URL(path));
 }
 
