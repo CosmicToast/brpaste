@@ -12,6 +12,9 @@ block content
                 td: pre: code POST / data=anything
                 td Pastebin anything
             tr
+                td: pre: code PUT /id data=anything
+                td Write anything into /id.
+            tr
                 td: pre: code GET /id
                 td Read paste with ID "id"
             tr
