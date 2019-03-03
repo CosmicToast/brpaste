@@ -9,7 +9,7 @@ block content
             th Effect
         tbody
             tr
-                td: pre: code POST /data=anything
+                td: pre: code POST / data=anything
                 td Pastebin anything
             tr
                 td: pre: code GET /id
