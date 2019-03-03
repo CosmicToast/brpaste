@@ -1,6 +1,6 @@
 #!/bin/sh
 
-: "${brpaste_host:=https://p.toastin.space}"
+: "${brpaste_host:=https://brpaste.xyz}"
 
 c() {
     curl -F "$1=<-" "$brpaste_host" < "$2" || return 1
