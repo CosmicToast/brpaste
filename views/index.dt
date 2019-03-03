@@ -13,7 +13,7 @@ block content
                 td Pastebin anything
             tr
                 td: pre: code PUT /id data=anything
-                td Write anything into /id.
+                td Write anything into /id. Collisions disallowed. If a POST id coincides with your PUT content, it will be overwritten.
             tr
                 td: pre: code GET /id
                 td Read paste with ID "id"
