@@ -28,14 +28,9 @@ class RedisStorage {
         return client.get(key);
     }
 
-    void put(in string key, in string data) {
+    void put(in string key, in string data, in bool collision = false) {
         isDown;
+        if(collision) enforceHTTP(! client.exists(key), HTTPStatus.unprocessableEntity, key ~ " already exists.");
         client.set(key, data);
-    }
-
-    void putCollision(in string key, in string data) {
-        isDown;
-        enforceHTTP(! client.exists(key), HTTPStatus.unprocessableEntity, key ~ " already exists.");
-        put(key, data);
     }
 }

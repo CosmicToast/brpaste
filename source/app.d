@@ -14,11 +14,15 @@ shared static this() {
 
     // setup router
     auto router = new URLRouter;
+
     router.match(HTTPMethod.REPORT, "/health", &health);
     router.get("/health", &health);
 
     router.get("/", staticTemplate!"index.dt");
+
     router.post("/", &post);
+    router.put("/:id", &put);
+
     router.get("/:id", &id);
     router.get("/raw/:id", &rawId);
 

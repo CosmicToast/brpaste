@@ -5,7 +5,12 @@ import brpaste.storage;
 
 import vibe.vibe;
 
+import std.functional;
+
 RedisStorage store;
+
+alias put  = partial!(insert, true);
+alias post = partial!(insert, false);
 
 string idCommon(in HTTPServerRequest req) {
     string id = req.params["id"];
@@ -29,12 +34,12 @@ void rawId(HTTPServerRequest req, HTTPServerResponse res) {
     res.writeBody(data);
 }
 
-void post(HTTPServerRequest req, HTTPServerResponse res) {
+void insert(bool put, HTTPServerRequest req, HTTPServerResponse res) {
     enforceHTTP("data" in req.form, HTTPStatus.badRequest, "Missing data field.");
     auto data = req.form["data"];
 
-    auto hash = data.hash;
-    store.put(hash, data);
+    auto hash = put ? req.params["id"] : data.hash;
+    store.put(hash, data, put);
     res.statusCode = HTTPStatus.created;
     res.writeBody(hash);
 }
