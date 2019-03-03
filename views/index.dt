@@ -25,11 +25,12 @@ block content
                 td: Get the raw contents of paste with ID "id"
     h2 Examples
     pre: code(class='language-sh')
-        | curl -F 'data=<-' https://brpaste.example.com
         | http -f https://brpaste.example.com data=@file.txt
-        | curl https://brpaste.example.com/raw/some_id
-        | xdg-open https://brpaste.example.com/some_id?cpp
+        | http -f https://brpaste.example.com data=abcd
+        | http -f PUT https://brpaste.example.com/myPaste data=contents
+        | http https://brpaste.example.com/raw/some_id
         | http https://brpaste.example.com/some_id lang==cpp
+        | xdg-open https://brpaste.example.com/some_id?cpp
     h2 Paste from a browser
     form(action='/', method='post')
         textarea(name='data', autocomplete='off',
