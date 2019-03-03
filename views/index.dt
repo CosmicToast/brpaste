@@ -10,19 +10,19 @@ block content
         tbody
             tr
                 td: pre: code POST / data=anything
-                td: Pastebin anything
+                td Pastebin anything
             tr
                 td: pre: code PUT /id data=anything
-                td: Write anything into /id.
+                td Write anything into /id.
             tr
                 td: pre: code GET /id
-                td: Read paste with ID "id"
+                td Read paste with ID "id"
             tr
                 td: pre: code GET /id?lang
-                td: Read paste with ID "id", and highlight it as "lang"
+                td Read paste with ID "id", and highlight it as "lang"
             tr
                 td: pre: code GET /raw/id
-                td: Get the raw contents of paste with ID "id"
+                td Get the raw contents of paste with ID "id"
     h2 Examples
     pre: code(class='language-sh')
         | http -f https://brpaste.example.com data=@file.txt
