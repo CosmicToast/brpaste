@@ -2,6 +2,7 @@
 docs.json
 __dummy.html
 docs/
+/doc/brpaste.1
 /brpaste
 brpaste.so
 brpaste.dylib
