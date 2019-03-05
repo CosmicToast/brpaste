@@ -35,10 +35,13 @@ void rawId(HTTPServerRequest req, HTTPServerResponse res) {
 }
 
 void insert(bool put, HTTPServerRequest req, HTTPServerResponse res) {
-    enforceHTTP("data" in req.form, HTTPStatus.badRequest, "Missing data field.");
-    auto data = req.form["data"];
+    import std.encoding;
 
+    enforceHTTP("data" in req.form, HTTPStatus.badRequest, "Missing data field.");
+    string data = req.form["data"];
+    enforceHTTP(data.isValid, HTTPStatus.unsupportedMediaType, "Content contains binary.");
     auto hash = put ? req.params["id"] : data.hash;
+
     store.put(hash, data, put);
     res.statusCode = HTTPStatus.created;
     res.writeBody(hash);
