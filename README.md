@@ -19,7 +19,7 @@ This is because the actual job being done is relatively minimal.
 However, because redis is used, your instance can be greatly configured.
 For instance, you could make all your pastes expire in 10 minutes.
 Or you could make them never expire.
-The hosted instance over at https://p.toastin.space limits memory usage to 250mb, and expires the least frequently used keys first.
+The hosted instance over at https://brpaste.xyz limits memory usage to 250mb, and expires the least frequently used keys first.
 This is the recommended configuration.
 
 ### Deployment Difficulty

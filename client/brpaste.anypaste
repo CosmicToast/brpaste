@@ -27,5 +27,5 @@ case $1 in
         echo 'direct'
         echo
         echo '[optional_config]'
-        echo 'brpaste_host:Hosted instance to use (default: https://p.toastin.space)'
+        echo 'brpaste_host:Hosted instance to use (default: https://brpaste.xyz)'
 esac
