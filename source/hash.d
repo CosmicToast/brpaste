@@ -11,3 +11,9 @@ pure string hash(T : string)(T data) {
     import std.string;
     return hash(data.representation);
 }
+
+unittest {
+    immutable(ubyte)[] a = [ 'b', 'r', 'p', 'a', 's', 't', 'e' ];
+    string s = "brpaste";
+    assert(a.hash == s.hash);
+}
