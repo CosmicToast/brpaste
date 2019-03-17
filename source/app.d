@@ -23,8 +23,8 @@ shared static this() {
     router.post("/", &post);
     router.put("/:id", &put);
 
-    router.get("/:id", &id);
-    router.get("/raw/:id", &rawId);
+    router.get("/:id", &idLng);
+    router.get("/raw/:id", &idRaw);
 
     listenHTTP(settings, router);
 }

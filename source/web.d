@@ -9,29 +9,27 @@ import std.functional;
 
 RedisStorage store;
 
-alias put  = partial!(insert, true);
-alias post = partial!(insert, false);
+alias put   = partial!(insert, true);
+alias post  = partial!(insert, false);
+alias idLng = partial!(id, true);
+alias idRaw = partial!(id, false);
 
-string idCommon(in HTTPServerRequest req) {
+void id(bool highlight, HTTPServerRequest req, HTTPServerResponse res) {
     string id = req.params["id"];
-    return store.get(id);
-}
+    auto data = store.get(id);
 
-void id(HTTPServerRequest req, HTTPServerResponse res) {
+    if(!highlight) {
+        res.contentType = "text/plain";
+        res.writeBody(data);
+        return;
+    }
+
     string language = "none";
     // TODO: rewrite the next two lines once #2273 is resolved
     if ("lang" in req.query) language = req.query["lang"];
     else if (req.query.length > 0) language = req.query.byKey.front;
 
-    auto data = idCommon(req);
     render!("code.dt", data, language)(res);
-}
-
-void rawId(HTTPServerRequest req, HTTPServerResponse res) {
-    res.contentType = "text/plain";
-
-    auto data = idCommon(req);
-    res.writeBody(data);
 }
 
 void insert(bool put, HTTPServerRequest req, HTTPServerResponse res) {
