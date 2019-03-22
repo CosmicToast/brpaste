@@ -2,17 +2,14 @@
 
 : "${brpaste_host:=https://brpaste.xyz}"
 
-c() {
-    curl -F "$1=<-" "$brpaste_host" < "$2" || return 1
-}
-
 case $1 in
     check_eligibility)
         [[ $ap_mime == text/* ]]
         ;;
     upload)
-        brpaste_id="$(c data $ap_path)" || return 1
-        echo >&2
+        brpaste_id=$(curl -#fF "data=<$ap_path" "$brpaste_host") \
+            || { echo 'ERROR: Upload failed!' >&2 && exit 1; }
+        echo
         echo "Link: $brpaste_host/$brpaste_id"
         echo "Direct: $brpaste_host/raw/$brpaste_id"
         echo
