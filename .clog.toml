@@ -1,0 +1,8 @@
+[clog]
+repository = "https://github.com/5paceToast/brpaste"
+subtitle = "Burning Rubber Paste"
+
+changelog = "CHANGELOG.md"
+
+[sections]
+Ecosystem = ["eco"]
