@@ -3,6 +3,6 @@ description "A pastebin server so fast, it burns rubber."
 authors "Chloe Kudryavtsev"
 copyright "Copyright © 2019, Chloe Kudryavtsev"
 license "MIT"
-dependency "vibe-d" version="~>0.8.5-rc.1"
+dependency "vibe-d" version="~>0.8.5"
 
 versions "VibeDefaultMain"
