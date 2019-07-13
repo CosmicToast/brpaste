@@ -26,9 +26,9 @@ void id(bool highlight, HTTPServerRequest req, HTTPServerResponse res) {
     }
 
     string language = "none";
-    // TODO: rewrite the next two lines once #2273 is resolved
-    if ("lang" in req.query) language = req.query["lang"];
-    else if (req.query.length > 0) language = req.query.byKey.front;
+    if ("lang" in req.params) language = req.params["lang"];
+    else if ("lang" in req.query) language = req.query["lang"]; // DEPRECATED
+    else if (req.query.length > 0) language = req.query.byKey.front; // ditto
 
     render!("code.dt", data, language)(res);
 }

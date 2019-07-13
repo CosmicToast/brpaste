@@ -23,8 +23,10 @@ shared static this() {
     router.post("/", &post);
     router.put("/:id", &put);
 
+    router.get("/:id/raw", &idRaw);
+    router.get("/:id/:lang", &idLng);
     router.get("/:id", &idLng);
-    router.get("/raw/:id", &idRaw);
+    router.get("/raw/:id", &idRaw); // DEPRECATED
 
     listenHTTP(settings, router);
 }
