@@ -9,11 +9,11 @@ block content
             th Effect
         tbody
             tr
-                td: pre: code POST / data=anything
-                td Pastebin anything
+                td: pre: code POST / data=foo
+                td Pastebin foo
             tr
-                td: pre: code PUT /id data=anything
-                td Write anything into /id. Collisions disallowed. If a POST id coincides with your PUT content, it will be overwritten.
+                td: pre: code PUT /id data=foo
+                td Write foo into /id. Collisions disallowed. If a POST id coincides with your PUT content, it will be overwritten.
             tr
                 td: pre: code GET /id
                 td Read paste with ID "id"
