@@ -25,8 +25,6 @@ func Get(store storage.CHR) handler {
 			if lang == "raw" {
 				ctx.SuccessString("text/plain", res)
 			} else {
-				//b := new(bytes.Buffer)
-				//template.WriteCode(b, lang, res)
 				ctx.SuccessString("text/html", template.Code(lang, res)) // render template
 			}
 		default:
