@@ -6,7 +6,5 @@ import (
 )
 
 func Index(ctx *fasthttp.RequestCtx) {
-	//b := new(bytes.Buffer)
-	//template.Index(b)
 	ctx.SuccessString("text/html", template.Index()) // render template
 }
