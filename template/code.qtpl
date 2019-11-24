@@ -1,0 +1,28 @@
+The code layout.
+{% func Code(lang, data string) %}
+  {%= layout(" ", code_scripts(lang), "", code_contents(lang, data), code_bodyscripts(lang)) %}
+{% endfunc %}
+
+{% code
+  const prefix = "https://unpkg.com/prismjs"
+%}
+
+The code scripts.
+{% func code_scripts(lang string) %}
+  <link rel='stylesheet' crossorigin='anonymous' href='{%s prefix %}/themes/prism.css' />
+{% endfunc %}
+
+The code bodyscripts.
+{% func code_bodyscripts(lang string) %}
+  {% stripspace %}
+    <script src='{%s prefix %}/prism.js'></script>
+    {% if lang != "" && lang != "none" %}
+      <script src='{%s prefix %}/components/prism-{%s lang %}.js'></script>
+    {% endif %}
+  {% endstripspace %}
+{% endfunc %}
+
+The code contents.
+{% func code_contents(lang, data string) %}
+  <pre><code class='language-{%s lang %}'>{%s data %}</code></pre>
+{% endfunc %}

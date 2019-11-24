@@ -1,0 +1,58 @@
+Index's contents.
+{% func index_contents() %}
+  {% stripspace %}
+    <h1>Burning Rubber Paste</h1>
+    <h2>Usage</h2>
+    <table border=1>
+      <thead>
+        <tr>
+          <th>Method - Endpoint</th>
+          <th>Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><pre><code>POST / data=foo</code></pre></td>
+          <td>Pastebin foo</td>
+        </tr>
+        <tr>
+          <td><pre><code>PUT /id data=foo</code></pre></td>
+          <td>Write foo into /id. Collisions disallowed. If a POST id coincides with your PUT content, it will be overwritten.</td>
+        </tr>
+        <tr>
+          <td><pre><code>GET /id</code></pre></td>
+          <td>Read paste with ID "id"</td>
+        </tr>
+        <tr>
+          <td><pre><code>GET /id/raw</code></pre></td>
+          <td>Get the raw contents of paste with ID "id"</td>
+        </tr>
+        <tr>
+          <td><pre><code>GET /id/lang</code></pre></td>
+          <td>Read paste with ID "id", and highlight it as "lang"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Examples</h2>
+  {% endstripspace %}
+    <pre><code class='language-sh'>http -f https://brpaste.example.com data=@file.txt
+http -f https://brpaste.example.com data=abcd
+http -f PUT https://brpaste.example.com/myPaste data=contents
+http https://brpaste.example.com/some_id/raw
+xdg-open https://brpaste.example.com/some_id/cpp</code></pre>
+  {% stripspace %}
+
+    <h2>Paste from a browser</h2>
+    <form action='/' method='post'>
+      <textarea name='data' autocomplete='off' required autofocus cols='80' rows='27'></textarea>
+      <br>
+      <button type='submit'>Paste it!</button>
+    </form>
+  {% endstripspace %}
+{% endfunc %}
+
+The index layout.
+{% func Index() %}
+  {%= layout("", "", "", index_contents(), "") %}
+{% endfunc %}

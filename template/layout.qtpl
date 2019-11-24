@@ -1,0 +1,49 @@
+The main layout function.
+{% func layout(css, scripts, title, contents, bodyscripts string) %}
+  <!DOCTYPE html>
+  {% stripspace %}
+    <html lang='en'>
+      <head>
+        <meta charset='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+
+        {% if len(css) == 0 %}
+          <style>
+            body {
+              margin: 40px auto;
+              max-width: 650px;
+              line-height: 1.6;
+              font-size: 18px;
+              color: #444;
+              padding: 0 10px;
+            }
+            h1, h2, h3 { line-length: 1.2; }
+            td { text-align: left; }
+          </style>
+        {% else %}
+          {%s= css %}
+        {% endif %}
+
+        {% if len(scripts) != 0 %}
+          {%s= scripts %}
+        {% endif %}
+
+        {% if len(title) == 0 %}
+          <title>Burning Rubber Paste</title>
+        {% else %}
+          {%s= title %}
+        {% endif %}
+      </head>
+      <body>
+        <div id='main'>
+          {% if len(contents) != 0 %}
+            {%s= contents %}
+          {% endif %}
+        </div>
+        {% if len(bodyscripts) != 0 %}
+          {%s= bodyscripts %}
+        {% endif %}
+      </body>
+    </html>
+  {% endstripspace %}
+{% endfunc %}

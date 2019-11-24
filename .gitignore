@@ -1,2 +1,5 @@
 /doc/brpaste.1
 /brpaste
+
+# must be added manually for releases
+/template/*.go
