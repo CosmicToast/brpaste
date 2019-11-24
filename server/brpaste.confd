@@ -1,6 +1,3 @@
-BRPASTE_USER=nobody
-BRPASTE_GROUP=nobody
-
 # defaults to localhost, set to :: to listen on all
 #BRPASTE_ADDR=:8080
 
