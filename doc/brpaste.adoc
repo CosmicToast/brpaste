@@ -1,6 +1,6 @@
 = brpaste(1)
 Chloe Kudryavtsev
-v0.0.1a
+v2.0.0
 :doctype: manpage
 
 == Name
@@ -13,11 +13,9 @@ brpaste - a pastebin service that's so fast, it burns rubber.
 
 == Options
 
-*-b, --bind*=_BIND_ADDRESS_::
-    Bind to address _BIND_ADDRESS_. May be used multiple times.
-*-p, --port*=_LISTEN_PORT_::
-    Listen on port _LISTEN_PORT_.
-*-r, --redis*=_REDIS_URI_::
+*--bind*=_BIND_ADDRESS_::
+    Bind to address _BIND_ADDRESS_.
+*--redis*=_REDIS_URI_::
     Connect to Redis using _REDIS_URI_.
 
 == Endpoints
@@ -28,11 +26,15 @@ _GET_ */*::
     Provides examples.
     Includes submission form.
 
-_GET_ */:id?(syntax|lang=syntax)*::
+_GET_ */:id*::
     User-facing viewer of paste _id_.
+    Standard view.
+
+_GET_ */:id/:syntax*::
+    Same as */:id*.
     If javascript is available, attempt to highlight the paste as _syntax_.
 
-_GET_ */raw/:id*::
+_GET_ */:id/raw*::
     Raw contents of paste _id_.
     Mime is set to plaintext.
 
@@ -44,11 +46,3 @@ _POST_ */* _data_=*content*::
 _PUT_ */:id* _data_=*content*::
     Put *content* into _id_.
     If _id_ already exists, abort.
-
-_GET|REPORT_ */health*::
-    Returns 204 is healthy.
-    Gives more information in case of failure.
-
-== See Also
-
-https://vibed.org/
