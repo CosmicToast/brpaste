@@ -1,21 +1,14 @@
 #!/sbin/openrc-run
 supervisor=supervise-daemon
 
-healthcheck_timer=30
 respawn_delay=30
 
+command_user="nobody:nobody"
 command=/usr/bin/brpaste
 command_args="\
-    ${BRPASTE_USER:+--uid $BRPASTE_USER} ${BRPASTE_GROUP:+--gid $BRPASTE_GROUP} \
-    ${BRPASTE_REDIS:+-r $BRPASTE_REDIS} \
-    ${BRPASTE_IP:+-b $BRPASTE_IP} ${BRPASTE_PORT:+-p $BRPASTE_PORT}"
+    ${BRPASTE_REDIS:+-redis $BRPASTE_REDIS} \
+    ${BRPASTE_ADDR:+-bind $BRPASTE_ADDR}
 
 depend() {
     need redis
 }
-
-health() {
-    curl -s "${BRPASTE_IP:-localhost}:${BRPASTE_PORT:-8080}/health"
-}
-
-unhealthy() {}

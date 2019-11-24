@@ -2,8 +2,7 @@ BRPASTE_USER=nobody
 BRPASTE_GROUP=nobody
 
 # defaults to localhost, set to :: to listen on all
-#BRPASTE_IP=::
-#BRPASTE_PORT=8080
+#BRPASTE_ADDR=:8080
 
 # if your redis is listening on a different address
 # accepts redis:// style strings

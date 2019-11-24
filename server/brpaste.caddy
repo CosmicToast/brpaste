@@ -1,5 +1,3 @@
 paste.example.com {
-    proxy / localhost:8080 {
-        health_check /health
-    }
+    proxy / localhost:8080
 }
