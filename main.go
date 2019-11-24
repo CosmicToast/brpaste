@@ -11,7 +11,7 @@ import (
 	"toast.cafe/x/brpaste/v2/storage"
 )
 
-var S settings
+var s settings
 
 type settings struct {
 	Bind    string
@@ -21,25 +21,25 @@ type settings struct {
 
 func main() {
 	// ---- Flags
-	flag.StringVar(&S.Bind, "bind", ":8080", "address to bind to")
-	flag.StringVar(&S.Redis, "redis", "redis://localhost:6379", "redis connection string")
-	flag.StringVar(&S.Storage, "storage", "redis", "type of storage to use")
+	flag.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
+	flag.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
+	flag.StringVar(&s.Storage, "storage", "redis", "type of storage to use")
 	flag.Parse()
 
 	// ---- Storage system
 	var store storage.CHR
 
-	switch S.Storage {
+	switch s.Storage {
 	case "redis":
-		redisOpts, err := redis.ParseURL(S.Redis)
+		redisOpts, err := redis.ParseURL(s.Redis)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Could not parse redis connection string %s\n", S.Redis)
+			fmt.Fprintf(os.Stderr, "Could not parse redis connection string %s\n", s.Redis)
 			os.Exit(1)
 		}
 		client := redis.NewClient(redisOpts)
 		store = (*storage.Redis)(client)
 	default:
-		fmt.Fprintf(os.Stderr, "Could not figure out which storage system to use, tried %s\n", S.Storage)
+		fmt.Fprintf(os.Stderr, "Could not figure out which storage system to use, tried %s\n", s.Storage)
 		os.Exit(1)
 	}
 
@@ -51,5 +51,5 @@ func main() {
 
 	// ---- Start!
 	handler := http.GenHandler(store)
-	fasthttp.ListenAndServe(S.Bind, handler)
+	fasthttp.ListenAndServe(s.Bind, handler)
 }

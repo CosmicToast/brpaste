@@ -9,6 +9,7 @@ import (
 	"toast.cafe/x/brpaste/v2/storage"
 )
 
+// Put generates a handler for the POST / and PUT /:key endpoints
 func Put(store storage.CHR, put bool) handler {
 	return func(ctx *fasthttp.RequestCtx) {
 		data := ctx.FormValue("data")

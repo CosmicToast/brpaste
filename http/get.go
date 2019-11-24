@@ -6,6 +6,7 @@ import (
 	"toast.cafe/x/brpaste/v2/template"
 )
 
+// Get generates a handler for the /:key[/:lang] endpoint
 func Get(store storage.CHR) handler {
 	return func(ctx *fasthttp.RequestCtx) {
 		ukey := ctx.UserValue("key")
