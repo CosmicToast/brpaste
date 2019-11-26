@@ -1,0 +1,83 @@
+kind: pipeline
+name: default
+
+common: &common
+  image: golang:alpine
+  commands:
+  - apk add binutils # strip
+  - go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}"
+  - strip "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}"
+
+steps:
+- name: build-linux-amd64
+  <<: *common
+  environment:
+    GOOS: linux
+    GOARCH: amd64
+
+- name: build-linux-arm64
+  <<: *common
+  environment:
+    GOOS: linux
+    GOARCH: arm64
+
+- name: build-linux-ppc64le
+  <<: *common
+  environment:
+    GOOS: linux
+    GOARCH: ppc64le
+
+- name: build-dragonfly-amd64
+  <<: *common
+  environment:
+    GOOS: dragonfly
+    GOARCH: amd64
+
+- name: build-freebsd-amd64
+  <<: *common
+  environment:
+    GOOS: freebsd
+    GOARCH: amd64
+
+- name: build-openbsd-amd64
+  <<: *common
+  environment:
+    GOOS: openbsd
+    GOARCH: amd64
+
+- name: build-windows-amd64
+  <<: *common
+  environment:
+    GOOS: windows
+    GOARCH: amd64
+
+- name: build-darwin-amd64
+  <<: *common
+  environment:
+    GOOS: darwin
+    GOARCH: amd64
+
+- name: test
+  image: golang:alpine
+  commands:
+  - go test -v ./...
+
+- name: deploy
+  image: plugins/s3
+  settings:
+    path_style: true
+    source: "${DRONE_REPO_NAME}-*"
+    target: "/${DRONE_REPO_NAME}"
+    bucket:
+      from_secret: s3_id
+    access_key:
+      from_secret: s3_id
+    secret_key:
+      from_secret: s3_key
+    endpoint:
+      from_secret: s3_endpoint
+  when:
+    branch:
+    - master
+    event:
+    - push
