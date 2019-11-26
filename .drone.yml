@@ -12,7 +12,7 @@ steps:
   commands:
   - apk add --no-cache git
   - go get github.com/valyala/quicktemplate/qtc
-  - "${{GOPATH}}/bin/qtc"
+  - "$${GOPATH}/bin/qtc"
 
 - name: build-linux-amd64
   <<: *common
