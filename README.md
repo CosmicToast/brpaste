@@ -1,9 +1,25 @@
 Burning Rubber Paste
 ====================
 
+[![Build Status](https://cloud.drone.io/api/badges/5paceToast/brpaste/status.svg)](https://cloud.drone.io/5paceToast/brpaste)
+
 `brpaste` is a small and fast pastebin service.
 It provides a lightweight REST-like interface and client-side syntax highlighting (if desired).
 It's small and fast because it relies on redis to perform the actual storage.
+
+### Quickstart
+#### Go edition
+`go get -u toast.cafe/x/brpaste`
+#### Github edition
+Download the correct binary from the releases page.
+#### CI (nightly master) edition
+Download your build from https://minio.toast.cafe/cicd/brpaste/brpaste-$OS-$ARCH where `$OS` is something like "openbsd" and `$ARCH` is something like "amd64".
+Note that the github edition binaries are just these from immediately after a release.
+
+### Platform Support
+Linux AMD64 is the primary platform.
+Everything else is "best effort".
+For a full list of supported platforms, see the releases page (all the binaries on there).
 
 ### Speed
 It's just fast.
