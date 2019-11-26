@@ -7,7 +7,7 @@ command_user="nobody:nobody"
 command=/usr/bin/brpaste
 command_args="\
     ${BRPASTE_REDIS:+-redis $BRPASTE_REDIS} \
-    ${BRPASTE_ADDR:+-bind $BRPASTE_ADDR}
+    ${BRPASTE_ADDR:+-bind $BRPASTE_ADDR}"
 
 depend() {
     need redis
