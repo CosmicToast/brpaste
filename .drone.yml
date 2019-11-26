@@ -4,9 +4,7 @@ name: default
 common: &common
   image: golang:alpine
   commands:
-  - apk add binutils # strip
-  - go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}"
-  - strip "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}"
+  - go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}" -ldflags "-s -w"
 
 steps:
 - name: build-linux-amd64
