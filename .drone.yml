@@ -7,6 +7,13 @@ common: &common
   - go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}" -ldflags "-s -w"
 
 steps:
+- name: prepare-templates
+  image: golang:alpine
+  commands:
+  - apk add --no-cache git
+  - go get github.com/valyala/quicktemplate/qtc
+  - "${{GOPATH}}/bin/qtc"
+
 - name: build-linux-amd64
   <<: *common
   environment:
@@ -58,7 +65,7 @@ steps:
 - name: test
   image: golang:alpine
   commands:
-  - apk add gcc musl-dev # apparently still needed
+  - apk add --no-cache gcc musl-dev # apparently still needed
   - go test -v ./...
 
 - name: deploy
