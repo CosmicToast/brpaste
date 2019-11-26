@@ -58,6 +58,7 @@ steps:
 - name: test
   image: golang:alpine
   commands:
+  - apk add gcc musl-dev # apparently still needed
   - go test -v ./...
 
 - name: deploy
