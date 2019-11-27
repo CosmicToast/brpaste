@@ -3,6 +3,7 @@ repository = "https://github.com/5paceToast/brpaste"
 subtitle = "Burning Rubber Paste"
 
 changelog = "CHANGELOG.md"
+from-latest-tag = true
 
 [sections]
 Ecosystem = ["eco"]
