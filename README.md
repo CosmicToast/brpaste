@@ -2,6 +2,7 @@ Burning Rubber Paste
 ====================
 
 [![Build Status](https://cloud.drone.io/api/badges/5paceToast/brpaste/status.svg)](https://cloud.drone.io/5paceToast/brpaste)
+[![Go Report Card](https://goreportcard.com/badge/toast.cafe/x/brpaste)](https://goreportcard.com/report/toast.cafe/x/brpaste)
 
 `brpaste` is a small and fast pastebin service.
 It provides a lightweight REST-like interface and client-side syntax highlighting (if desired).
