@@ -51,6 +51,10 @@ _PUT_ */:id* _data_=*content*::
 
 == Storage Systems
 
+Memory::
+Selected with "memory".
+Not persistent, but very fast.
+
 Redis::
 Selected with "redis".
 Also the default and recommended option.
