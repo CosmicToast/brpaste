@@ -1,6 +1,6 @@
 The code layout.
 {% func Code(lang, data string) %}
-  {%= layout(" ", code_scripts(lang), "", code_contents(lang, data), code_bodyscripts(lang)) %}
+  {%= layout(code_css(), code_scripts(lang), "", code_contents(lang, data), code_bodyscripts(lang)) %}
 {% endfunc %}
 
 {% code
@@ -20,6 +20,15 @@ The code bodyscripts.
       <script src='{%s prefix %}/components/prism-{%s lang %}.js'></script>
     {% endif %}
   {% endstripspace %}
+{% endfunc %}
+
+The code css.
+{% func code_css() %}
+  <style>
+  pre[class*="language-"] code[class*="language-"] {
+    white-space: pre-wrap;
+  }
+  </style>
 {% endfunc %}
 
 The code contents.
