@@ -2,6 +2,8 @@ package storage
 
 import "github.com/go-redis/redis/v7"
 
+var _ CHR = &Redis{}
+
 // Redis storage engine
 type Redis redis.Client
 

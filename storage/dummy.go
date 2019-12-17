@@ -1,5 +1,7 @@
 package storage
 
+var _ CHR = &Dummy{}
+
 // Dummy is a dummy storage device that acts predictably for tests
 type Dummy struct {
 	collide, healthy bool
