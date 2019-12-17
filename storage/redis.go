@@ -29,7 +29,7 @@ func (r *Redis) Read(key string) (string, error) {
 	if !r.Healthy() {
 		return "", Unhealthy
 	}
-	return r.Get(key).Result()
+	return r.Get(key).Result() // TODO: return NotFound conditionally
 }
 
 // Healthy determines whether redis is responding to pings
