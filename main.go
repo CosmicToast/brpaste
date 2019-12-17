@@ -30,6 +30,8 @@ func main() {
 	var store storage.CHR
 
 	switch s.Storage {
+	case "memory":
+		store = storage.NewMemory()
 	case "redis":
 		redisOpts, err := redis.ParseURL(s.Redis)
 		if err != nil {
