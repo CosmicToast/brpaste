@@ -4,8 +4,8 @@ var _ CHR = &Dummy{}
 
 // Dummy is a dummy storage device that acts predictably for tests
 type Dummy struct {
-	collide, healthy bool
-	err              error
+	collide, found, healthy bool
+	err                     error
 }
 
 // Create is a noop
@@ -32,6 +32,9 @@ func (d *Dummy) Read(key string) (string, error) {
 	var err error
 	if !d.Healthy() {
 		err = Unhealthy
+	}
+	if !d.found {
+		err = NotFound
 	}
 	return key, err
 }
