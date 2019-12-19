@@ -25,7 +25,7 @@ func StreamCode(qw422016 *qt422016.Writer, lang, data string) {
 	qw422016.N().S(`
   `)
 //line template/code.qtpl:3
-	streamlayout(qw422016, " ", code_scripts(lang), "", code_contents(lang, data), code_bodyscripts(lang))
+	streamlayout(qw422016, code_css(), code_scripts(lang), "", code_contents(lang, data), code_bodyscripts(lang))
 //line template/code.qtpl:3
 	qw422016.N().S(`
 `)
@@ -161,47 +161,88 @@ func code_bodyscripts(lang string) string {
 //line template/code.qtpl:23
 }
 
-// The code contents.
+// The code css.
 
 //line template/code.qtpl:26
-func streamcode_contents(qw422016 *qt422016.Writer, lang, data string) {
+func streamcode_css(qw422016 *qt422016.Writer) {
 //line template/code.qtpl:26
 	qw422016.N().S(`
+  <style>
+  pre[class*="language-"] code[class*="language-"] {
+    white-space: pre-wrap;
+  }
+  </style>
+`)
+//line template/code.qtpl:32
+}
+
+//line template/code.qtpl:32
+func writecode_css(qq422016 qtio422016.Writer) {
+//line template/code.qtpl:32
+	qw422016 := qt422016.AcquireWriter(qq422016)
+//line template/code.qtpl:32
+	streamcode_css(qw422016)
+//line template/code.qtpl:32
+	qt422016.ReleaseWriter(qw422016)
+//line template/code.qtpl:32
+}
+
+//line template/code.qtpl:32
+func code_css() string {
+//line template/code.qtpl:32
+	qb422016 := qt422016.AcquireByteBuffer()
+//line template/code.qtpl:32
+	writecode_css(qb422016)
+//line template/code.qtpl:32
+	qs422016 := string(qb422016.B)
+//line template/code.qtpl:32
+	qt422016.ReleaseByteBuffer(qb422016)
+//line template/code.qtpl:32
+	return qs422016
+//line template/code.qtpl:32
+}
+
+// The code contents.
+
+//line template/code.qtpl:35
+func streamcode_contents(qw422016 *qt422016.Writer, lang, data string) {
+//line template/code.qtpl:35
+	qw422016.N().S(`
   <pre><code class='language-`)
-//line template/code.qtpl:27
+//line template/code.qtpl:36
 	qw422016.E().S(lang)
-//line template/code.qtpl:27
+//line template/code.qtpl:36
 	qw422016.N().S(`'>`)
-//line template/code.qtpl:27
+//line template/code.qtpl:36
 	qw422016.E().S(data)
-//line template/code.qtpl:27
+//line template/code.qtpl:36
 	qw422016.N().S(`</code></pre>
 `)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 }
 
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 func writecode_contents(qq422016 qtio422016.Writer, lang, data string) {
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	streamcode_contents(qw422016, lang, data)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	qt422016.ReleaseWriter(qw422016)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 }
 
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 func code_contents(lang, data string) string {
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	qb422016 := qt422016.AcquireByteBuffer()
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	writecode_contents(qb422016, lang, data)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	qs422016 := string(qb422016.B)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	qt422016.ReleaseByteBuffer(qb422016)
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 	return qs422016
-//line template/code.qtpl:28
+//line template/code.qtpl:37
 }

@@ -1,0 +1,9 @@
+    2.1.0 (2019-12-19)
+
+Chloe Kudryavtsev <toast@toast.cafe>
+. init.d script is valid again
+. there is now an in-memory storage engine (use in production not recommended)
+. consumers of brpaste as a library can now override the default templates
+
+Haelwenn Monnier <contact@hacktivis.me>
+. default template backgrounds default to white

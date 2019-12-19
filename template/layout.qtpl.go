@@ -30,75 +30,75 @@ func streamlayout(qw422016 *qt422016.Writer, css, scripts, title, contents, body
 //line template/layout.qtpl:10
 	if len(css) == 0 {
 //line template/layout.qtpl:10
-		qw422016.N().S(`<style>body {margin: 40px auto;max-width: 650px;line-height: 1.6;font-size: 18px;color: #444;padding: 0 10px;}h1, h2, h3 { line-length: 1.2; }td { text-align: left; }</style>`)
-//line template/layout.qtpl:23
-	} else {
+		qw422016.N().S(`<style>body {margin: 40px auto;max-width: 650px;line-height: 1.6;font-size: 18px;background: #fff;color: #444;padding: 0 10px;}h1, h2, h3 { line-length: 1.2; }td { text-align: left; }</style>`)
 //line template/layout.qtpl:24
-		qw422016.N().S(css)
-//line template/layout.qtpl:25
-	}
-//line template/layout.qtpl:27
-	if len(scripts) != 0 {
-//line template/layout.qtpl:28
-		qw422016.N().S(scripts)
-//line template/layout.qtpl:29
-	}
-//line template/layout.qtpl:31
-	if len(title) == 0 {
-//line template/layout.qtpl:31
-		qw422016.N().S(`<title>Burning Rubber Paste</title>`)
-//line template/layout.qtpl:33
 	} else {
+//line template/layout.qtpl:25
+		qw422016.N().S(css)
+//line template/layout.qtpl:26
+	}
+//line template/layout.qtpl:28
+	if len(scripts) != 0 {
+//line template/layout.qtpl:29
+		qw422016.N().S(scripts)
+//line template/layout.qtpl:30
+	}
+//line template/layout.qtpl:32
+	if len(title) == 0 {
+//line template/layout.qtpl:32
+		qw422016.N().S(`<title>Burning Rubber Paste</title>`)
 //line template/layout.qtpl:34
+	} else {
+//line template/layout.qtpl:35
 		qw422016.N().S(title)
-//line template/layout.qtpl:35
+//line template/layout.qtpl:36
 	}
-//line template/layout.qtpl:35
+//line template/layout.qtpl:36
 	qw422016.N().S(`</head><body><div id='main'>`)
-//line template/layout.qtpl:39
-	if len(contents) != 0 {
 //line template/layout.qtpl:40
+	if len(contents) != 0 {
+//line template/layout.qtpl:41
 		qw422016.N().S(contents)
-//line template/layout.qtpl:41
+//line template/layout.qtpl:42
 	}
-//line template/layout.qtpl:41
+//line template/layout.qtpl:42
 	qw422016.N().S(`</div>`)
-//line template/layout.qtpl:43
-	if len(bodyscripts) != 0 {
 //line template/layout.qtpl:44
+	if len(bodyscripts) != 0 {
+//line template/layout.qtpl:45
 		qw422016.N().S(bodyscripts)
-//line template/layout.qtpl:45
+//line template/layout.qtpl:46
 	}
-//line template/layout.qtpl:45
+//line template/layout.qtpl:46
 	qw422016.N().S(`</body></html>`)
-//line template/layout.qtpl:48
+//line template/layout.qtpl:49
 	qw422016.N().S(`
 `)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 }
 
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 func writelayout(qq422016 qtio422016.Writer, css, scripts, title, contents, bodyscripts string) {
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	streamlayout(qw422016, css, scripts, title, contents, bodyscripts)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	qt422016.ReleaseWriter(qw422016)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 }
 
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 func layout(css, scripts, title, contents, bodyscripts string) string {
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	qb422016 := qt422016.AcquireByteBuffer()
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	writelayout(qb422016, css, scripts, title, contents, bodyscripts)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	qs422016 := string(qb422016.B)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	qt422016.ReleaseByteBuffer(qb422016)
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 	return qs422016
-//line template/layout.qtpl:49
+//line template/layout.qtpl:50
 }
