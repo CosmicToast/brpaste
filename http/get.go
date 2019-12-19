@@ -3,7 +3,6 @@ package http
 import (
 	"github.com/valyala/fasthttp"
 	"toast.cafe/x/brpaste/v2/storage"
-	"toast.cafe/x/brpaste/v2/template"
 )
 
 // Get generates a handler for the /:key[/:lang] endpoint
@@ -26,7 +25,7 @@ func Get(store storage.CHR) handler {
 			if lang == "raw" {
 				ctx.SuccessString("text/plain", res)
 			} else {
-				ctx.SuccessString("text/html", template.Code(lang, res)) // render template
+				ctx.SuccessString("text/html", CodeTemplate(lang, res)) // render template
 			}
 		default:
 			ctx.NotFound()
