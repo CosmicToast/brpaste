@@ -1,0 +1,63 @@
+= BRpaste: Reading Guide
+Chloe Kudryavtsev <toast@toast.cafe>
+v2.2.0, 2019-01-09
+
+This document serves as a general guide on how to read the sources of any given release, with the goal of understanding the entirety of the program.
+The "version" of this document should coincide with the release you are using.
+If there is a newer release than in this document, feel free to open an issue.
+
+== Overview
+`main.go`:: has the code for the binary itself, do not read this first.
+`http`:: this directory contains https://github.com/valyala/fasthttp[fasthttp] handlers for the server.
+`storage`:: this directory contains various storage methods.
+`template`:: this directory contains https://github.com/valyala/quicktemplate[quicktemplate] templates for the server, as well as their compiled forms. `.go` files in that directory should be ignored.
+`_test.go`:: all these files are tests, and can be safely ignored, or used as samples of usage.
+
+== Reading Order
+One should start by understanding the `storage` methods and interface.
+Once that's done, one can look at the `http` directory.
+The `template` directory is mostly superfluous besides knowledge of quicktemplate.
+Finally, one can look at `main.go`.
+The rest of this section will be detailed explanations of what to look at.
+
+=== Storage
+Start by observing `storage/type.go`.
+The const variables are sentinel errors, that should be used by compliant storage engines.
+The `type storage.Error` stuff makes them legitimate Errors as per go's specs.
+Finally, we define the `CHR` interface, which is how all consumers should interact with a given storage engine, past initialization.
+
+Then, you can look at any storage engine of interest, but one thing to note in `storage/redis.go` is that we use a type alias (`type Redis redis.Client`).
+This is done so that we can (effectively) extend it to implement the `CHR` interface.
+This means that we can create a `redis.Client` instance, convert it to `storage.Redis` and then use that as a `CHR`.
+For an example, see `main.go`.
+
+=== HTTP
+First, take a quick look at `http/router.go` which is a handler generator.
+Note the routes that are defined using https://github.com/fasthttp/router[fasthttp-router].
+You can see more information on what each route is supposed to do from the user's perspective in the documentation.
+All of the routes are implemented using 3 functions total: `Get`, `Put` and `Index`.
+
+First, let's take a look at the simplest one: `http/index.go`.
+It simply renders the configured template.
+Templates are set in `storage/templates.go` and can be overridden by API callers.
+The defaults, of course, set them to various templates in the `templates` directory, but more on those later.
+
+Now that we familiarized ourselves with how simple a handler can be, we can look at one of the handler generators.
+We'll start with the simpler one: `storage/get.go`.
+The first thing to note is that it is passed an instance of `CHR`, which it gets from the generator in `http/router.go`.
+It figures out the requested language, and then either returns the raw contents of the paste, or renders the code-viewing template.
+
+Finally, we can look at `storage/put.go`.
+Put has a few extra steps: it calculates a hash of the input content, has more error handling (it can't just 404) and tries to do a smart redirect.
+If the UA is determined to be a browser (done by `storage/ua_detector.go`, a simple function), it will do a "See Other" redirection.
+Otherwise, it will print the key (hash contents) in plaintext.
+
+=== Templates
+The only interesting files inside of the `template` directory are the `.qtpl` ones, as they are not generated (unlike the `.go` files in that directory).
+They just contain the HTML that will be used.
+
+=== Main
+There is just `main.go` left.
+There are a few options: what address to bind to, what storage backend to use, and storage-engine-specific options.
+In the `switch s.Storage` block, we initialize the various storage backend options and populate the `store` variable, which will be used generically for the rest of the program.
+Then we make sure that the storage was initialized correctly, generate the main handler using `http/router.go` and launch `fasthttp`.
