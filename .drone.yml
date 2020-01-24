@@ -50,17 +50,17 @@ steps:
     GOOS: openbsd
     GOARCH: amd64
 
-- name: build-windows-amd64
-  <<: *common
-  environment:
-    GOOS: windows
-    GOARCH: amd64
+#- name: build-windows-amd64
+#  <<: *common
+#  environment:
+#    GOOS: windows
+#    GOARCH: amd64
 
-- name: build-darwin-amd64
-  <<: *common
-  environment:
-    GOOS: darwin
-    GOARCH: amd64
+#- name: build-darwin-amd64
+#  <<: *common
+#  environment:
+#    GOOS: darwin
+#    GOARCH: amd64
 
 - name: test
   image: golang:alpine
