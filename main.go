@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
@@ -9,6 +8,7 @@ import (
 	"github.com/valyala/fasthttp"
 	"toast.cafe/x/brpaste/v2/http"
 	"toast.cafe/x/brpaste/v2/storage"
+	"toast.cafe/x/libuconf"
 )
 
 var s settings
@@ -21,6 +21,7 @@ type settings struct {
 
 func main() {
 	// ---- Flags
+	flag := libuconf.DefaultSet
 	flag.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
 	flag.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
 	flag.StringVar(&s.Storage, "storage", "redis", "type of storage to use")
