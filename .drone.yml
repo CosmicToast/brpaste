@@ -4,7 +4,7 @@ name: default
 common: &common
   image: golang:alpine
   commands:
-  - go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}" -ldflags "-s -w"
+  - CGO_ENABLED=0 go build -v -o "${DRONE_REPO_NAME}-$${GOOS}-$${GOARCH}" -ldflags "-s -w"
 
 steps:
 - name: prepare-templates
