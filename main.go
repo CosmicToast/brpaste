@@ -21,11 +21,12 @@ type settings struct {
 
 func main() {
 	// ---- Flags
-	flag := libuconf.DefaultSet
-	flag.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
-	flag.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
-	flag.StringVar(&s.Storage, "storage", "redis", "type of storage to use")
-	flag.Parse()
+	ops := &libuconf.OptionSet{AppName: "brpaste"}
+	ops.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
+	ops.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
+	ops.StringVar(&s.Storage, "storage", "redis", "type of storage to use")
+	ops.ParseEnv()
+	ops.ParseFlags(os.Args[1:])
 
 	// ---- Storage system
 	var store storage.CHR
