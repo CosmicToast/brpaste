@@ -8,6 +8,11 @@ Burning Rubber Paste
 It provides a lightweight REST-like interface and client-side syntax highlighting (if desired).
 It's small and fast because it relies on redis to perform the actual storage.
 
+### Project Status
+Brpaste has been in pure maintenance mode for a while.
+Do not mistake the recent (at the time of writing) commits as it being revived: I added boltdb mode to make it easier to migrate (again).
+I'm planning to write a new (smaller) thing eventually, but for now I'm still hosting this, and am making it simpler to host.
+
 ### Quickstart
 #### Go edition
 `go get -u toast.cafe/x/brpaste`
