@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"flag"
 	"os"
 
 	bolt "go.etcd.io/bbolt"
@@ -9,7 +10,6 @@ import (
 	"github.com/valyala/fasthttp"
 	"toast.cafe/x/brpaste/v2/http"
 	"toast.cafe/x/brpaste/v2/storage"
-	"toast.cafe/x/libuconf"
 )
 
 var s settings
@@ -23,13 +23,11 @@ type settings struct {
 
 func main() {
 	// ---- Flags
-	ops := &libuconf.OptionSet{AppName: "brpaste"}
-	ops.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
-	ops.StringVar(&s.Bolt, "bolt", "brpaste.db", "bolt database file to use")
-	ops.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
-	ops.StringVar(&s.Storage, "storage", "bolt", "type of storage to use")
-	ops.ParseEnv()
-	ops.ParseFlags(os.Args[1:])
+	flag.StringVar(&s.Bind, "bind", ":8080", "address to bind to")
+	flag.StringVar(&s.Bolt, "bolt", "brpaste.db", "bolt database file to use")
+	flag.StringVar(&s.Redis, "redis", "redis://localhost:6379", "redis connection string")
+	flag.StringVar(&s.Storage, "storage", "bolt", "type of storage to use")
+	flag.Parse()
 
 	// ---- Storage system
 	var store storage.CHR
